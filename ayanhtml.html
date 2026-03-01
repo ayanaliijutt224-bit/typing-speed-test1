@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Typing Speed Test</title>
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      background-color: #222;
+      color: white;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #333;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    #paragraph { margin-bottom: 15px; font-size: 18px; }
+    textarea { width: 100%; height: 100px; font-size: 16px; padding: 10px; }
+    button { margin-top: 10px; padding: 10px 20px; font-size: 16px; border: none; background: orange; cursor: pointer; }
+    button:hover { background: darkorange; }
+    #result { margin-top: 15px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Typing Speed Test</h2>
+    <p id="paragraph">Practice typing every day to improve your speed and accuracy in English language.</p>
+    <textarea id="inputText" placeholder="Start typing here..."></textarea>
+    <br>
+    <button onclick="startTest()">Start Test</button>
+    <button onclick="restartTest()">Restart</button>
+    <p id="timer">Time: 30</p>
+    <p id="result"></p>
+  </div>
+<script>
+let timeLeft = 30;
+let timer;
+let isRunning = false;
+function startTest() {
+  if (isRunning) return;
+  isRunning = true;
+  timer = setInterval(function() {
+    timeLeft--;
+    document.getElementById("timer").innerText = "Time: " + timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      calculateSpeed();
+    }
+  }, 1000);
+}
+function calculateSpeed() {
+  let text = document.getElementById("inputText").value;
+  let words = text.trim().split(" ").length;
+  let wpm = words;
+  document.getElementById("result").innerText = "Your Typing Speed is: " + wpm + " WPM";
+}
+function restartTest() {
+  clearInterval(timer);
+  timeLeft = 30;
+  isRunning = false;
+  document.getElementById("timer").innerText = "Time: 30";
+  document.getElementById("inputText").value = "";
+  document.getElementById("result").innerText = "";
+}
+</script>
+</body>
+</html>
